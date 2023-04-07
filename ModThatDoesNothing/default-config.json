@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "settings": {
+    "level": {
+      "type": "slider",
+      "title": "Useless Slider",
+      "tooltip": "This slider doesn't do anything. I don't know why it's here.",
+      "min": 0,
+      "max": 10,
+      "value": 1
+    }
+  }
+}

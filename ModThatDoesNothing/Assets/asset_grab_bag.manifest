@@ -1,0 +1,49 @@
+ManifestFileVersion: 0
+CRC: 3734028364
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: a1ec08b15352a87b4f27f6a45a0345bb
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 98ce67869e51ce560cb28163ae64d82b
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 83
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers: []
+Assets:
+- Assets/GrabBagOfAssets/positions_fireflies.prefab
+- Assets/GrabBagOfAssets/party_animator.prefab
+- Assets/GrabBagOfAssets/portraits-tall.png
+- Assets/GrabBagOfAssets/sad-trombone.mp3
+- Assets/GrabBagOfAssets/disco-groove-muffled.mp3
+- Assets/GrabBagOfAssets/portraits-scary.png
+- Assets/GrabBagOfAssets/bird_leafs.prefab
+- Assets/GrabBagOfAssets/owl-bling.png
+- Assets/GrabBagOfAssets/owl-fab.png
+- Assets/GrabBagOfAssets/disco-groove.mp3
+- Assets/GrabBagOfAssets/portraits.png
+Dependencies: []
