@@ -5,6 +5,6 @@
   "name": "Mod that does Nothing",
   "uniqueName": "VioVayo.ModThatDoesNothing",
   "version": "0.1.0",
-  "owmlVersion": "2.8.0",
+  "owmlVersion": "2.9.0",
   "dependencies": []
 }
