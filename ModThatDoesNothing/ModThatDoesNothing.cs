@@ -200,7 +200,7 @@ namespace ModThatDoesNothing
             partyGroove.SetMaxVolume(0);
             StartCoroutine(DelayByAFrame(() =>
             {
-                partyGroove.SetMaxVolume(0.5f);
+                partyGroove.SetMaxVolume(0.6f);
                 partyGroove.SetLocalVolume(0);
             }
             ));
@@ -230,7 +230,7 @@ namespace ModThatDoesNothing
             probe.OnRetrieveProbe += () =>
             {
                 grooveObj.transform.SetParent(null, true);
-                partyGroove.FadeOut(0.5f, OWAudioSource.FadeOutCompleteAction.CONTINUE);
+                partyGroove.FadeOut(0.25f, OWAudioSource.FadeOutCompleteAction.CONTINUE);
             };
             //ModHelper.Console.WriteLine("Scout party time!", MessageType.Success);
         }
