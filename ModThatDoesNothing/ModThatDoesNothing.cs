@@ -61,7 +61,7 @@ namespace ModThatDoesNothing
 
                 ++index1;
                 if (activations[index1]) { ReplaceCockpitFriend(); activations[index1] = false; }
-                ++index1;
+                //++index1;
                 //if (activations[index1]) { EvenFriendlierPosters(); activations[index1] = false; }
                 ++index1;
                 if (activations[index1]) { CaffeinatedTravellers(); activations[index1] = false; }
