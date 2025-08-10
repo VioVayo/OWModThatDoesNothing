@@ -6,6 +6,14 @@ namespace HugMod
     public interface IHugModApi
     {
         /// <summary>
+        /// Returns an array of all GameObjects that have a hug script attached<br/>
+        /// This may falsely return null if used directly on scene load, so it's good to wait a frame first
+        /// </summary>
+        /// <returns>The array of GameObjects, including deactivated ones</returns>
+        public GameObject[] GetAllHuggables();
+
+
+        /// <summary>
         /// Makes a suitable GameObject huggable
         /// </summary>
         /// <param name="hugObject">The GameObject, requires an OWCollider component on it or one of its children</param>
@@ -66,7 +74,7 @@ namespace HugMod
 
         /// <summary>
         /// Sets what point the player camera should focus on during a hug<br/>
-        /// This point's position in relation to the player also decides whether a target is out of reach, and what animation to use for the player
+        /// This point's position in relation to the player also decides whether a target is out of reach, and what animation is used for the player
         /// </summary>
         /// <param name="hugObject">The huggable GameObject</param>
         /// <param name="focusPoint">The point relative to the huggable GameObject's Transform</param>
@@ -97,7 +105,7 @@ namespace HugMod
         void SetAnimationMasks(GameObject hugObject, bool fullbodyReact = true, bool keepRightFootPosition = false, bool keepLeftFootPosition = false, bool keepRightHandPose = false, bool keepLeftHandPose = false);
 
         /// <summary>
-        /// Makes it so a transition happens during a hug sequence, causing it to always exit into a specific AnimatorState<br/>
+        /// Makes it so an animation transition happens during a hug sequence, causing it to always exit into a specific AnimatorState<br/>
         /// Requires the target to be animated and humanoid, and doesn't work if HugTrigger is set to None
         /// </summary>
         /// <param name="hugObject">The huggable GameObject</param>
@@ -107,7 +115,7 @@ namespace HugMod
         void SetUnderlayTransition(GameObject hugObject, AnimationClip transitionClip, int transitionHash, float transitionTime = 0.5f);
 
         /// <summary>
-        /// Makes it so a transition happens during a hug sequence, causing it to always exit into a specific AnimatorState<br/>
+        /// Makes it so an animation transition happens during a hug sequence, causing it to always exit into a specific AnimatorState<br/>
         /// Requires the target to be animated and humanoid, and doesn't work if HugTrigger is set to None<br/>
         /// Requires the hug script to be initialised
         /// </summary>
@@ -262,7 +270,7 @@ namespace HugMod
         void ChangeSecondaryAnimator(GameObject hugObject, Animator newAnimator);
 
         /// <summary>
-        /// Sets or changes the CharacterAnimController for the Look IK script to coordinate with<br/>
+        /// Sets or changes the CharacterAnimController the Look IK script coordinates with<br/>
         /// Requires the hug script to be initialised
         /// </summary>
         /// <param name="hugObject">The huggable GameObject</param>

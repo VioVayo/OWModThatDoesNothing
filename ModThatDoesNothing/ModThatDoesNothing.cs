@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace ModThatDoesNothing
 {
@@ -39,7 +38,7 @@ namespace ModThatDoesNothing
 
             ModHelper.Console.WriteLine($"{nameof(ModThatDoesNothing)} is enabled. Don't even worry about it.", MessageType.Success);
 
-            LoadManager.OnCompleteSceneLoad += (scene, loadScene) =>
+            LoadManager.OnCompleteSceneLoad += (_, loadScene) =>
             {
                 if (loadScene is not (OWScene.SolarSystem or OWScene.EyeOfTheUniverse)) return;
 
@@ -114,7 +113,7 @@ namespace ModThatDoesNothing
         private void DeathTrumpet() //3
         {
             GlobalMessenger<DeathType>.AddListener("PlayerDeath", new Callback<DeathType>(PlayDeathTrumpet));
-            void PlayDeathTrumpet(DeathType irrelevant)
+            void PlayDeathTrumpet(DeathType _)
             {
                 var obj = GameObject.Find("PauseMenu");
                 obj.SetActive(false);
@@ -132,6 +131,7 @@ namespace ModThatDoesNothing
         {
             var pottedPlant = GameObject.Find("Props_HEA_ShipFoliage");
             var pottedCactus = Instantiate(GameObject.Find("Props_HGT_Cactus_Single_A_Alt"), GameObject.Find("Ship_Body/Module_Cockpit/Props_Cockpit").transform);
+            var bundle = pottedCactus.GetComponentInChildren<StreamingMeshHandle>().assetBundle;
             pottedCactus.transform.localScale = new(0.36f, 0.36f, 0.36f);
             pottedCactus.transform.localPosition = new(-1.65f, 0.4f, 3.9f);
             pottedCactus.transform.localEulerAngles = new(15f, 0, 0);
@@ -154,7 +154,7 @@ namespace ModThatDoesNothing
                 hugApi.GetInteractReceiver(pottedCactus)._usableInShip = true;
             }
 
-            void LoadCactus() { StreamingManager.LoadStreamingAssets("hourglasstwins/meshes/props"); }
+            void LoadCactus() { StreamingManager.LoadStreamingAssets(bundle); }
             //ModHelper.Console.WriteLine("Hhhhh cactus.", MessageType.Success);
         }
 
@@ -182,7 +182,7 @@ namespace ModThatDoesNothing
 
         private void PartyScout() //6
         {
-            var scout = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(obj => obj.name == "Probe_Body" && obj.scene == SceneManager.GetActiveScene());
+            var scout = GameObject.FindWithTag("Probe");
             if (scout == null) return;
             var lightObj = scout.transform.Find("Lantern").gameObject;
             var emissive = lightObj.GetComponent<ProbeLantern>()._emissiveRenderer;
@@ -418,7 +418,7 @@ namespace ModThatDoesNothing
             foreach (var sector in sectors)
             {
                 var positions = positionsPrefab.transform.Find(sector.name).Cast<Transform>();
-                foreach (var position in positions)
+                foreach (var position in positions) for (int n = 0; n < 2; ++n)
                 {
                     var firefliesAtPos = Instantiate(fireflies, sector.transform);
                     firefliesAtPos.transform.localPosition = position.localPosition;
@@ -465,7 +465,7 @@ namespace ModThatDoesNothing
                 if (!OWTime.IsPaused())
                 {
                     var red = partyLight.color.r; var green = partyLight.color.g; var blue = partyLight.color.b;
-                    //partyLight.color = new(green != 1 ? 1 : brightness, blue != 1 ? 1 : brightness, red != 1 ? 1 : brightness, 1); //rygcbm
+                    //var colour = new Color(green != 1 ? 1 : brightness, blue != 1 ? 1 : brightness, red != 1 ? 1 : brightness, 1); //rygcbm
                     var colour = red == green ?
                         new Color(blue != 1 ? 1 : brightness, red != 1 ? 1 : brightness, green != 1 ? 1 : brightness, 1) :
                         new Color(blue == 1 ? 1 : brightness, red == 1 ? 1 : brightness, green == 1 ? 1 : brightness, 1); //rgbcmy
@@ -486,8 +486,8 @@ namespace ModThatDoesNothing
                     {
                         var directionObject = objRefPairs[n].Item1.TransformDirection(localDirectionObject);
                         var directionReference = objRefPairs[n].Item2.TransformDirection(localDirectionReference);
-                        var toTargetRotation = Quaternion.AngleAxis(Vector3.Angle(directionObject, directionReference), Vector3.Cross(directionObject, directionReference));
-                        objRefPairs[n].Item1.rotation = spring.Update(objRefPairs[n].Item1.rotation, toTargetRotation * objRefPairs[n].Item1.rotation, Time.deltaTime);
+                        var targetRotation = Quaternion.FromToRotation(directionObject, directionReference) * objRefPairs[n].Item1.rotation;
+                        objRefPairs[n].Item1.rotation = spring.Update(objRefPairs[n].Item1.rotation, targetRotation, Time.deltaTime);
                     }
                     else objRefPairs.Remove(objRefPairs[n]);
                 }
